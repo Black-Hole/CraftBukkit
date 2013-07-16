@@ -329,6 +329,7 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
         InventoryHorseChest inventoryhorsechest = this.inventoryChest;
 
         this.inventoryChest = new InventoryHorseChest("HorseChest", this.cG());
+        this.inventoryChest.horse = (org.bukkit.entity.Horse) this.getBukkitEntity(); // CraftBukkit
         this.inventoryChest.a(this.getLocalizedName());
         if (inventoryhorsechest != null) {
             inventoryhorsechest.b(this);

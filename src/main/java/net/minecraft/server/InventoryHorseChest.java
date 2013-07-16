@@ -14,7 +14,7 @@ public class InventoryHorseChest extends InventorySubcontainer {
 
     // CraftBukkit start
     public List<HumanEntity> transaction = new java.util.ArrayList<HumanEntity>();
-    public org.bukkit.entity.Player player;
+    public org.bukkit.entity.Horse horse;
     private int maxStack = MAX_STACK;
 
     @Override
@@ -39,7 +39,7 @@ public class InventoryHorseChest extends InventorySubcontainer {
 
     @Override
     public org.bukkit.inventory.InventoryHolder getOwner() {
-        return this.player;
+        return horse;
     }
 
     @Override
