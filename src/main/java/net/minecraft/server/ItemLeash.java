@@ -48,7 +48,7 @@ public class ItemLeash extends Item {
                         world.getServer().getPluginManager().callEvent(event);
 
                         if (event.isCancelled()) {
-                        	entityleash.die();
+                            entityleash.die();
                             return flag;
                         }
                         // CraftBukkit end
