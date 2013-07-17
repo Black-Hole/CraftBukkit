@@ -994,6 +994,8 @@ public class CraftWorld implements World {
                 entity = new EntityPainting(world, (int) x, (int) y, (int) z, dir);
             } else if (ItemFrame.class.isAssignableFrom(clazz)) {
                 entity = new EntityItemFrame(world, (int) x, (int) y, (int) z, dir);
+            } else if (LeadKnot.class.isAssignableFrom(clazz)) {
+                entity = new EntityLeash(world, (int) x, (int) y, (int) z);
             }
 
             if (entity != null && !((EntityHanging) entity).survives()) {

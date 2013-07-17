@@ -40,6 +40,18 @@ public class ItemLeash extends Item {
                 if (entityinsentient.bH() && entityinsentient.bI() == entityhuman) {
                     if (entityleash == null) {
                         entityleash = EntityLeash.a(world, i, j, k);
+                        // CraftBukkit start
+                        org.bukkit.entity.Player who = (entityhuman == null) ? null : (org.bukkit.entity.Player) entityhuman.getBukkitEntity();
+                        org.bukkit.block.Block blockClicked = world.getWorld().getBlockAt(i, j, k);
+
+                        org.bukkit.event.hanging.HangingPlaceEvent event = new org.bukkit.event.hanging.HangingPlaceEvent((org.bukkit.entity.Hanging) entityleash.getBukkitEntity(), who, blockClicked, org.bukkit.block.BlockFace.SELF);
+                        world.getServer().getPluginManager().callEvent(event);
+
+                        if (event.isCancelled()) {
+                        	entityleash.die();
+                            return flag;
+                        }
+                        // CraftBukkit end
                     }
 
                     entityinsentient.b(entityleash, true);
