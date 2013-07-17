@@ -3,6 +3,11 @@ package net.minecraft.server;
 import java.util.Iterator;
 import java.util.List;
 
+// CraftBukkit start
+import org.bukkit.entity.Player;
+import org.bukkit.event.hanging.HangingPlaceEvent;
+// CraftBukkit end
+
 public class ItemLeash extends Item {
 
     public ItemLeash(int i) {
@@ -41,10 +46,10 @@ public class ItemLeash extends Item {
                     if (entityleash == null) {
                         entityleash = EntityLeash.a(world, i, j, k);
                         // CraftBukkit start
-                        org.bukkit.entity.Player who = (entityhuman == null) ? null : (org.bukkit.entity.Player) entityhuman.getBukkitEntity();
+                        Player who = (entityhuman == null) ? null : (Player) entityhuman.getBukkitEntity();
                         org.bukkit.block.Block blockClicked = world.getWorld().getBlockAt(i, j, k);
 
-                        org.bukkit.event.hanging.HangingPlaceEvent event = new org.bukkit.event.hanging.HangingPlaceEvent((org.bukkit.entity.Hanging) entityleash.getBukkitEntity(), who, blockClicked, org.bukkit.block.BlockFace.SELF);
+                        HangingPlaceEvent event = new HangingPlaceEvent((org.bukkit.entity.Hanging) entityleash.getBukkitEntity(), who, blockClicked, org.bukkit.block.BlockFace.SELF);
                         world.getServer().getPluginManager().callEvent(event);
 
                         if (event.isCancelled()) {
