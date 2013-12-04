@@ -370,7 +370,7 @@ public class CraftWorld implements World {
             gen = new WorldGenTaiga1();
             break;
         case JUNGLE:
-            gen = new WorldGenMegaTree(true, rand.nextBoolean());
+            gen = new WorldGenJungleTree(true, 10, 20, 3, 3); // Magic values as in BlockSapling 
             break;
         case SMALL_JUNGLE:
             gen = new WorldGenTrees(true, 4 + rand.nextInt(7), 3, 3, false);
@@ -392,6 +392,12 @@ public class CraftWorld implements World {
             break;
         case DARK_OAK:
             gen = new WorldGenForestTree(true);
+            break;
+        case MEGA_REDWOOD:
+            gen = new WorldGenMegaTree(true, rand.nextBoolean());
+            break;
+        case TALL_BIRCH:
+            gen = new WorldGenForest(true, true);
             break;
         case TREE:
         default:
