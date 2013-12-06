@@ -4,6 +4,15 @@ import java.util.Random;
 
 public class BlockTNT extends Block {
 
+// CraftBukkit start
+    private boolean blockChangeEventCancelled = false;
+
+    private boolean callBlockChangeEvent(EntityTNTPrimed entitytntprimed, int x, int y, int z) {
+        blockChangeEventCancelled = org.bukkit.craftbukkit.event.CraftEventFactory.callEntityChangeBlockEvent(entitytntprimed, x, y, z, Blocks.AIR, 0).isCancelled();
+        return blockChangeEventCancelled;
+    }
+// CraftBukkit end
+
     public BlockTNT() {
         super(Material.TNT);
         this.a(CreativeModeTab.d);
@@ -13,6 +22,10 @@ public class BlockTNT extends Block {
         super.onPlace(world, i, j, k);
         if (world.isBlockIndirectlyPowered(i, j, k)) {
             this.postBreak(world, i, j, k, 1);
+// CraftBukkit start
+            if (blockChangeEventCancelled)
+                return;
+// CraftBukkit end
             world.setAir(i, j, k);
         }
     }
@@ -20,6 +33,10 @@ public class BlockTNT extends Block {
     public void doPhysics(World world, int i, int j, int k, Block block) {
         if (world.isBlockIndirectlyPowered(i, j, k)) {
             this.postBreak(world, i, j, k, 1);
+// CraftBukkit start
+            if (blockChangeEventCancelled)
+                return;
+// CraftBukkit end
             world.setAir(i, j, k);
         }
     }
@@ -33,6 +50,10 @@ public class BlockTNT extends Block {
             EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(world, (double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), explosion.c());
 
             entitytntprimed.fuseTicks = world.random.nextInt(entitytntprimed.fuseTicks / 4) + entitytntprimed.fuseTicks / 8;
+// CraftBukkit start
+            if (callBlockChangeEvent(entitytntprimed, i, j, k))
+                return;
+// CraftBukkit end
             world.addEntity(entitytntprimed);
         }
     }
@@ -46,6 +67,10 @@ public class BlockTNT extends Block {
             if ((l & 1) == 1) {
                 EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(world, (double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), entityliving);
 
+// CraftBukkit start
+                if (callBlockChangeEvent(entitytntprimed, i, j, k))
+                    return;
+// CraftBukkit end
                 world.addEntity(entitytntprimed);
                 world.makeSound(entitytntprimed, "game.tnt.primed", 1.0F, 1.0F);
             }
@@ -54,7 +79,11 @@ public class BlockTNT extends Block {
 
     public boolean interact(World world, int i, int j, int k, EntityHuman entityhuman, int l, float f, float f1, float f2) {
         if (entityhuman.bD() != null && entityhuman.bD().getItem() == Items.FLINT_AND_STEEL) {
-            this.a(world, i, j, k, 1, entityhuman);
+            this.a(world, i, j, k, 1, (EntityLiving) entityhuman); // CraftBukkit - Fix decompile error
+// CraftBukkit start
+            if (blockChangeEventCancelled)
+                return false;
+// CraftBukkit end
             world.setAir(i, j, k);
             entityhuman.bD().damage(1, entityhuman);
             return true;
@@ -69,6 +98,10 @@ public class BlockTNT extends Block {
 
             if (entityarrow.isBurning()) {
                 this.a(world, i, j, k, 1, entityarrow.shooter instanceof EntityLiving ? (EntityLiving) entityarrow.shooter : null);
+// CraftBukkit start
+                if (blockChangeEventCancelled)
+                    return;
+// CraftBukkit end
                 world.setAir(i, j, k);
             }
         }
