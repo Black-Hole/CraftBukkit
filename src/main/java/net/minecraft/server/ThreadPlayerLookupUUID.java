@@ -40,7 +40,7 @@ class ThreadPlayerLookupUUID extends Thread {
                 server.getPluginManager().callEvent(asyncEvent);
 
                 if (PlayerPreLoginEvent.getHandlerList().getRegisteredListeners().length != 0) {
-                    final PlayerPreLoginEvent event = new PlayerPreLoginEvent(playerName, address);
+                    final PlayerPreLoginEvent event = new PlayerPreLoginEvent(playerName, address, uniqueId);
                     if (asyncEvent.getResult() != PlayerPreLoginEvent.Result.ALLOWED) {
                         event.disallow(asyncEvent.getResult(), asyncEvent.getKickMessage());
                     }
