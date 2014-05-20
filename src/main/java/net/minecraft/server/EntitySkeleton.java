@@ -169,6 +169,13 @@ public class EntitySkeleton extends EntityMonster implements IRangedEntity {
             }
         }
 
+        // Include equipment
+        for (ItemStack stack : this.dropEquipment(this.lastDamageByPlayerTime > 0, i)) {
+            if (stack != null) {
+                loot.add(CraftItemStack.asCraftMirror(stack));
+            }
+        }
+
         org.bukkit.craftbukkit.event.CraftEventFactory.callEntityDeathEvent(this, loot);
         // CraftBukkit end
     }
