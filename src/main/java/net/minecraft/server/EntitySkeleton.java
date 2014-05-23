@@ -2,7 +2,10 @@ package net.minecraft.server;
 
 import java.util.Calendar;
 
-import org.bukkit.event.entity.EntityCombustEvent; // CraftBukkit
+// CraftBukkit start
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.event.entity.EntityCombustEvent;
+// CraftBukkit end
 
 public class EntitySkeleton extends EntityMonster implements IRangedEntity {
 
@@ -164,7 +167,7 @@ public class EntitySkeleton extends EntityMonster implements IRangedEntity {
             if (k < 5) {
                 ItemStack itemstack = this.getRareDrop(k <= 0 ? 1 : 0);
                 if (itemstack != null) {
-                    loot.add(org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(itemstack));
+                    loot.add(CraftItemStack.asCraftMirror(itemstack));
                 }
             }
         }
